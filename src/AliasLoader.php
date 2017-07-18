@@ -43,9 +43,10 @@ class AliasLoader extends MetaInfoLoader
             }
 
             foreach ((array)$aliases as $alias) {
-                if (class_exists($alias) || interface_exists($alias)) {
+                if (class_exists($alias) || interface_exists($alias) || trait_exists($alias)) {
                     throw new RedeclareException("Cannot declare alias $alias in $realPath, because the name is already in use");
                 }
+
 
                 if (class_alias($origin, $alias) === false) {
                     throw new \BadMethodCallException("class_alias $origin to $alias fail in $realPath");
