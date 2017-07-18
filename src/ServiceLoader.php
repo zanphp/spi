@@ -59,6 +59,7 @@ class ServiceLoader extends MetaInfoLoader
             }
 
             $interface = $interfaceInfo["interface"];
+            $interface = ltrim($interface, "\\");
 
             if (!class_exists($impl)) {
                 throw new ClassNotFoundException("class $impl not found in $realPath");
