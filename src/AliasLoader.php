@@ -38,8 +38,8 @@ class AliasLoader extends MetaInfoLoader
                 continue;
             }
 
-            if (!class_exists($origin) && !interface_exists($origin)) {
-                throw new ClassNotFoundException("class or interface $origin not found in $realPath");
+            if (!class_exists($origin) && !interface_exists($origin) && !trait_exists($origin)) {
+                throw new ClassNotFoundException("class or interface or trait $origin not found in $realPath");
             }
 
             foreach ((array)$aliases as $alias) {
