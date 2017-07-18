@@ -13,7 +13,6 @@ abstract class MetaInfoLoader
 
     public function scan($vendor)
     {
-        echo "META-INF " . static::class . " scanning\n";
         $iter = $this->recursiveScan($vendor);
         foreach ($iter as $realPath) {
             $this->parse($realPath);
