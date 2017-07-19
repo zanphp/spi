@@ -88,7 +88,21 @@ class ServiceLoader extends MetaInfoLoader
                 static::$providers[$interface] = [];
             }
 
-            static::$providers[$interface][] = [ "class" => $impl ] + $interfaceInfo;
+            /**
+             * interface => [
+             *  [
+             *      'class' => ,
+             *      'id' => ,
+             *      'shared' =>,
+             *  ],
+             *  ......
+             * 】
+             */
+            static::$providers[$interface][] = [ "class" => $impl ] + $interfaceInfo +
+                [
+                    "shared" => false,
+                    "id" => $interface,
+                ];
         }
     }
 }
