@@ -12,6 +12,22 @@ class ServiceLoader extends MetaInfoLoader
 
     private static $providers;
 
+    /**
+     * @var static
+     */
+    private static $instance = null;
+
+    /**
+     * @return static
+     */
+    public static function getInstance()
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     public static function load($interface = null)
     {
         if ($interface === null) {

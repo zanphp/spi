@@ -10,6 +10,22 @@ class AliasLoader extends MetaInfoLoader
 {
     const SUFFIX = "alias.php";
 
+    /**
+     * @var static
+     */
+    private static $instance = null;
+
+    /**
+     * @return static
+     */
+    public static function getInstance()
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     protected function parse($realPath)
     {
         /** @noinspection PhpIncludeInspection */
