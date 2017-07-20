@@ -41,12 +41,6 @@ class ServiceLoader extends MetaInfoLoader
         }
     }
 
-    public function scan($vendor)
-    {
-        static::$providers = [];
-        parent::scan($vendor);
-    }
-
     protected function accept(\SplFileInfo $fileInfo, $path, \FilesystemIterator $iter)
     {
         $suffix = static::PREFIX . static::SUFFIX;
@@ -58,14 +52,18 @@ class ServiceLoader extends MetaInfoLoader
         return false;
     }
 
-    protected function parse($realPath)
+    public function scan($vendor)
     {
-        /** @noinspection PhpIncludeInspection */
-        $providers = require $realPath;
-        if (is_array($providers)) {
-            $this->registerServiceProvider($realPath, $providers);
+        static::$providers = [];
+        $metaInfo = parent::getMetaInfo($vendor);
+
+        foreach ($metaInfo as $realPath => $providers) {
+            if (is_array($providers)) {
+                $this->registerServiceProvider($realPath, $providers);
+            }
         }
     }
+
 
     private function registerServiceProvider($realPath, array $providers)
     {

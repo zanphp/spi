@@ -7,19 +7,21 @@ abstract class MetaInfoLoader
 {
     const PREFIX = "META-INF/";
 
-    abstract protected function parse($realPath);
+    abstract public function scan($vendor);
 
     abstract protected function accept(\SplFileInfo $fileInfo, $path, \FilesystemIterator $iter);
 
-    public function scan($vendor)
+    protected function getMetaInfo($vendor)
     {
+        $metaMap = [];
         $iter = $this->recursiveScan($vendor);
         foreach ($iter as $realPath) {
-            $this->parse($realPath);
+            $metaMap[$realPath] = require $realPath;
         }
+        return $metaMap;
     }
 
-    protected function recursiveScan($dir)
+    private function recursiveScan($dir)
     {
         $iter = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
         $iter = new \RecursiveCallbackFilterIterator($iter, function($current, $key, \RecursiveDirectoryIterator $iter) {
