@@ -10,7 +10,7 @@ class ServiceLoader extends MetaInfoLoader
 {
     const SUFFIX = "service.php";
 
-    private static $providers;
+    private static $providers = [];
 
     /**
      * @var static
@@ -54,7 +54,6 @@ class ServiceLoader extends MetaInfoLoader
 
     public function scan($vendor)
     {
-        static::$providers = [];
         $metaInfo = parent::getMetaInfo($vendor);
 
         foreach ($metaInfo as $realPath => $providers) {
